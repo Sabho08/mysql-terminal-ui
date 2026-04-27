@@ -73,7 +73,7 @@ function App() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "openai/gpt-oss-120b",
+          model: "llama3-70b-8192",
           messages: [
             {
               role: "system",
@@ -81,7 +81,7 @@ function App() {
             },
             {
               role: "user",
-              content: instruction
+              content: finalInstruction
             }
           ],
           temperature: 0.1
@@ -94,8 +94,11 @@ function App() {
         throw new Error(data.error ? data.error.message : "Request failed");
       }
 
-      const result = data.choices[0].message.content;
-      setHistory(prev => [...prev, { type: 'result', content: result }])
+      // Clean the result of markdown backticks
+      const rawResult = data.choices[0].message.content;
+      const cleanResult = rawResult.replace(/```[a-z]*\n?/gi, '').replace(/```/g, '').trim();
+      
+      setHistory(prev => [...prev, { type: 'result', content: cleanResult }])
       setMode('std')
       setInstruction('')
     } catch (error) {
