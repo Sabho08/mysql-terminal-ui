@@ -77,7 +77,7 @@ function App() {
           messages: [
             {
               role: "system",
-              content: "You are a senior database engineer. For the given request, provide the DDL commands (CREATE TABLE) for all necessary tables, followed by INSERT statements with realistic sample data, and finally the main SQL query to answer the request. Return ONLY the SQL code. Use clean formatting. No commentary and no comments."
+              content: "You are a senior database engineer. For the given request, provide the DDL commands (CREATE TABLE) for all necessary tables, followed by INSERT statements with realistic sample data, and finally the main SQL query to answer the request. Use Oracle SQL syntax. Return ONLY the SQL code. Use clean formatting. No commentary and no comments."
             },
             {
               role: "user",
