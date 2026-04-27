@@ -5,13 +5,14 @@ function App() {
     { type: 'info', content: 'Microsoft Windows [Version 10.0.19045.5131]' },
     { type: 'info', content: '(c) Microsoft Corporation. All rights reserved.' },
     { type: 'info', content: '' },
+    { type: 'info', content: import.meta.env.VITE_SESSION_TOKEN ? 'Session active via system environment.' : 'No active session detected.' },
     { type: 'info', content: 'Enter /mode to begin instruction input.' },
   ])
   const [input, setInput] = useState('')
   const [mode, setMode] = useState('std') // 'std' or 'input'
   const [instruction, setInstruction] = useState('')
   const [isProcessing, setIsProcessing] = useState(false)
-  const [token, setToken] = useState(localStorage.getItem('session_token') || '')
+  const [token, setToken] = useState(import.meta.env.VITE_SESSION_TOKEN || localStorage.getItem('session_token') || '')
 
   const bottomRef = useRef(null)
   const inputRef = useRef(null)
