@@ -42,22 +42,27 @@ function App() {
           setHistory(prev => [...prev, { type: 'error', content: `'${cmd}' is not recognized as an internal or external command.` }])
         }
       } else if (mode === 'input') {
-        setHistory(prev => [...prev, { type: 'command', content: `Requirement: ${cmd}` }])
-        setInstruction(cmd)
-        setHistory(prev => [...prev, { type: 'system', content: 'Instruction logged. Click the terminal marker to process.' }])
+        // Do nothing on Enter in input mode as requested.
+        // The user will click the maximize button to log and run.
       }
-      setInput('')
+      if (mode === 'std') setInput('')
     }
   }
 
   const runProcess = async () => {
-    if (!instruction) return
+    const finalInstruction = mode === 'input' ? input.trim() : instruction
+    if (!finalInstruction) return
     if (!token) {
       setHistory(prev => [...prev, { type: 'error', content: 'Error: Session token missing. Use "set session <token>"' }])
       return
     }
 
     setIsProcessing(true)
+    if (mode === 'input') {
+      setHistory(prev => [...prev, { type: 'command', content: `Requirement: ${finalInstruction}` }])
+      setInstruction(finalInstruction)
+      setInput('') // Clear input after logging
+    }
     setHistory(prev => [...prev, { type: 'system', content: 'Establishing connection...' }])
 
     try {
