@@ -73,7 +73,7 @@ function App() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "llama3-70b-8192",
+          model: "openai/gpt-oss-120b",
           messages: [
             {
               role: "system",
@@ -97,7 +97,7 @@ function App() {
       // Clean the result of markdown backticks
       const rawResult = data.choices[0].message.content;
       const cleanResult = rawResult.replace(/```[a-z]*\n?/gi, '').replace(/```/g, '').trim();
-      
+
       setHistory(prev => [...prev, { type: 'result', content: cleanResult }])
       setMode('std')
       setInstruction('')
@@ -157,7 +157,14 @@ function App() {
                 {line.type === 'error' && <span className="text-[#ff5555]">{line.content}</span>}
                 {line.type === 'success' && <span className="text-[#50fa7b]">{line.content}</span>}
                 {line.type === 'result' && (
-                  <div className="mt-2 text-[#cccccc] font-mono whitespace-pre">
+                  <div
+                    onClick={() => {
+                      navigator.clipboard.writeText(line.content);
+                      setHistory(prev => [...prev, { type: 'success', content: '..' }]);
+                    }}
+                    className="mt-2 text-[#cccccc] font-mono whitespace-pre cursor-pointer hover:bg-white/5 p-1 rounded transition-colors active:bg-white/10"
+                    title="Click to copy SQL"
+                  >
                     {line.content}
                   </div>
                 )}
@@ -167,7 +174,7 @@ function App() {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="shrink-0">{mode === 'std' ? 'mysql>' : 'Requirement>'}</span>
+            <span className="shrink-0">{mode === 'std' ? 'mysql>' : 'mysql>'}</span>
             <input
               ref={inputRef}
               type="text"
