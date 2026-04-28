@@ -77,7 +77,7 @@ function App() {
           messages: [
             {
               role: "system",
-              content: "You are a senior database engineer. For the given request, provide the DDL commands (CREATE TABLE) for all necessary tables, followed by INSERT statements with realistic sample data, and finally the main SQL query to answer the request. Use Oracle SQL syntax but STRICTLY restrict data types to ONLY: CHAR, VARCHAR, INT, and DATETIME. Do NOT use VARCHAR2, NUMBER, or other Oracle-specific types. Return ONLY the SQL code. Use clean formatting. No commentary and no comments."
+              content: "You are a senior database engineer. For the given request, provide the DDL commands (CREATE TABLE) for all necessary tables, followed by INSERT statements with realistic sample data, and finally the main mySQL query to answer the request. Use Oracle mySQL syntax but STRICTLY restrict data types to ONLY: CHAR, VARCHAR, INT, and DATETIME. Do NOT use VARCHAR2, NUMBER, or other Oracle-specific types. Return ONLY the mySQL code. Use clean formatting. No commentary and no comments."
             },
             {
               role: "user",
